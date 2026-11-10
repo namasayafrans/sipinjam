@@ -12,6 +12,26 @@
 <div class="section-title"><div><span class="eyebrow">AKTIVITAS</span><h2>Riwayat pengajuan saya</h2></div></div><div class="table-card"><table><thead><tr><th>Tanggal</th><th>Barang</th><th>Jumlah</th><th>Status</th></tr></thead><tbody id="studentLoanRows"></tbody></table></div><p id="studentMessage" class="message"></p></section>
 <section id="adminView" class="hidden"><div class="heading"><div><span class="eyebrow">DASHBOARD ADMINISTRATOR</span><h1>Selamat bekerja, <span id="adminName">Admin</span>.</h1><p>Kelola inventaris dan tinjau permohonan peminjaman mahasiswa.</p></div><div class="account admin-account"><b id="adminEmail"></b><span>Administrator</span></div></div>
 <div class="stats"><article><span>Total jenis barang</span><b id="adminTotalItems">0</b></article><article><span>Total pengajuan</span><b id="adminTotalLoans">0</b></article><article class="pending-stat"><span>Menunggu persetujuan</span><b id="adminPendingLoans">0</b></article></div>
-<div class="section-title"><div><span class="eyebrow">PENGELOLAAN</span><h2>Ringkasan inventaris</h2></div><button id="adminRefreshBtn" class="button secondary">Muat ulang</button></div><div class="table-card"><table><thead><tr><th>Nama barang</th><th>Kategori</th><th>Stok tersedia</th></tr></thead><tbody id="adminItemsRows"></tbody></table></div>
+
+<!-- FORM CRUD INVENTARIS BARANG -->
+<div class="auth-card form-card" style="margin-bottom: 25px;">
+  <h2>Form Kelola Barang Inventaris</h2>
+  <p class="muted">Tambah baru atau ubah data barang inventaris yang ada.</p>
+  <form id="itemForm">
+    <input type="hidden" id="itemId">
+    <div class="form-grid">
+      <label>Nama Barang<input id="itemName" type="text" required placeholder="Contoh: Proyektor Epson"></label>
+      <label>Kategori<select id="itemCategory" class="styled-select"><option value="">-- Pilih Kategori --</option></select></label>
+      <label>Stok Tersedia<input id="itemStock" type="number" min="0" value="0" required></label>
+    </div>
+    <label>Deskripsi<input id="itemDesc" type="text" placeholder="Keterangan kondisi/spesifikasi barang"></label>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button type="submit" id="formSubmitBtn" class="button primary">Tambah Barang</button>
+      <button type="button" id="cancelEditBtn" class="button secondary hidden">Batal Edit</button>
+    </div>
+  </form>
+</div>
+
+<div class="section-title"><div><span class="eyebrow">PENGELOLAAN</span><h2>Ringkasan inventaris</h2></div><button id="adminRefreshBtn" class="button secondary">Muat ulang</button></div><div class="table-card"><table><thead><tr><th>Nama barang</th><th>Kategori</th><th>Stok tersedia</th><th>Aksi</th></tr></thead><tbody id="adminItemsRows"></tbody></table></div>
 <div class="section-title"><div><span class="eyebrow">PERMOHONAN</span><h2>Persetujuan peminjaman</h2><p class="muted">Setujui atau tolak pengajuan yang masih menunggu.</p></div></div><div class="table-card"><table><thead><tr><th>Peminjam</th><th>Tanggal</th><th>Barang</th><th>Status</th><th>Tindakan</th></tr></thead><tbody id="adminLoanRows"></tbody></table></div><p id="adminMessage" class="message"></p></section>
 </main><footer>Prototype tugas praktik • SIPINJAM</footer><script src="app.js"></script></body></html>
