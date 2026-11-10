@@ -1,6 +1,6 @@
 // 1. Isi dua nilai ini dari Supabase: Project Settings > API.
-const SUPABASE_URL = "PASTE_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://avnoaoqbehudxuxrrtxb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_B6i8yInUGVjcrTW0dmNhrA_i9XjZj2i";
 const configured = !SUPABASE_URL.startsWith("PASTE_") && !SUPABASE_ANON_KEY.startsWith("PASTE_");
 const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
