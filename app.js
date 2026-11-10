@@ -1,6 +1,6 @@
 // SIPINJAM - isi URL dan publishable/anon key dari Supabase Project Settings > API.
-const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY";
+const SUPABASE_URL = "https://nqsvenaqscjngjmyadal.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_f_PiDR-A0i07Z-ARhQNO4A__kM6N3wd";
 const configured = !SUPABASE_URL.includes("YOUR_PROJECT") && !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
 const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const $ = id => document.getElementById(id);
