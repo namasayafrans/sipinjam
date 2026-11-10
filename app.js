@@ -1,6 +1,6 @@
 // SIPINJAM - URL dan Anon Key dari Supabase Project Settings > API.
-const SUPABASE_URL = "https://nqsvenaqscjngjmyadal.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_f_PiDR-A0i07Z-ARhQNO4A__kM6N3wd";
+const SUPABASE_URL = "https://qpinxatauzcstiuukhwv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_3H_Pr3TxhtCYdPIpRjTpvw_WX2NVbyc";
 const configured = !SUPABASE_URL.includes("YOUR_PROJECT") && !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
 const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const $ = id => document.getElementById(id);
