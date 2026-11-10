@@ -1,6 +1,6 @@
 // SIPINJAM - isi URL dan publishable/anon key dari Supabase Project Settings > API.
-const SUPABASE_URL = "https://nqsvenaqscjngjmyadal.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_f_PiDR-A0i07Z-ARhQNO4A__kM6N3wd";
+const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY";
 const configured = !SUPABASE_URL.includes("YOUR_PROJECT") && !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
 const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const $ = id => document.getElementById(id);
@@ -24,7 +24,11 @@ async function boot(){
   // PEMBEDA ROLE: baca public.profiles berdasarkan UUID akun yang sedang login.
   const {data:profile,error}=await db.from('profiles').select('id,full_name,role').eq('id',currentUser.id).single();
   if(error||!profile){await db.auth.signOut();currentUser=null;showAuth();return msg('authMessage','Profil tidak ditemukan. Pastikan akun memiliki baris di tabel profiles dan SQL setup sudah dijalankan.',true);}
-  currentProfile=profile; const role=String(profile.role||'').toLowerCase();
+  currentProfile=profile; 
+  
+  // PERBAIKAN: Ditambahkan .trim() untuk mengantisipasi spasi tidak sengaja di database
+  const role=String(profile.role||'').toLowerCase().trim();
+  
   if(!['admin','member'].includes(role)){await db.auth.signOut();showAuth();return msg('authMessage',`Role '${role}' tidak dikenali. Gunakan admin atau member.`,true);}
   if(role==='admin'){$('adminName').textContent=profile.full_name||currentUser.email;$('adminEmail').textContent=currentUser.email;showRole('admin');await loadAdmin();}
   else{$('studentName').textContent=profile.full_name||currentUser.email;$('studentEmail').textContent=currentUser.email;showRole('member');await loadStudent();}
@@ -36,7 +40,7 @@ function statusHtml(s){return `<span class="status ${['pending','approved','reje
 async function getItems(){return db.from('items').select('id,name,description,available_stock,categories(name)').order('name');}
 
 async function loadStudent(){
- if(!currentUser||currentProfile?.role!=='member')return;
+ if(!currentUser||String(currentProfile?.role||'').toLowerCase().trim()!=='member')return;
  const [ir,lr]=await Promise.all([getItems(),db.from('loans').select('id,loan_date,status,loan_items(quantity,items(name))').eq('user_id',currentUser.id).order('created_at',{ascending:false})]);
  if(ir.error)return msg('studentMessage',ir.error.message,true);if(lr.error)return msg('studentMessage',lr.error.message,true);
  const items=ir.data||[],loans=lr.data||[];$('studentTotalItems').textContent=items.length;$('studentAvailableItems').textContent=items.filter(x=>x.available_stock>0).length;$('studentLoanCount').textContent=loans.length;
@@ -52,7 +56,7 @@ async function requestLoan(itemId){
 }
 
 async function loadAdmin(){
- if(!currentUser||currentProfile?.role!=='admin')return;
+ if(!currentUser||String(currentProfile?.role||'').toLowerCase().trim()!=='admin')return;
  const [ir,lr]=await Promise.all([getItems(),db.from('loans').select('id,user_id,loan_date,status,loan_items(quantity,items(name))').order('created_at',{ascending:false})]);
  if(ir.error)return msg('adminMessage',ir.error.message,true);if(lr.error)return msg('adminMessage',lr.error.message,true);
  const items=ir.data||[],loans=lr.data||[];$('adminTotalItems').textContent=items.length;$('adminTotalLoans').textContent=loans.length;$('adminPendingLoans').textContent=loans.filter(l=>l.status==='pending').length;
